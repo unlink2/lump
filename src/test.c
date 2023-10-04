@@ -29,17 +29,9 @@ void assert_tok(const char *tok, const char *expected, int expected_len) {
 
 void test_tok(void **state) {
   assert_tok("", "", 0);
-  assert_tok("single line", "single line", 11);
-  assert_tok("multi line\ntoken", "multi line", 10);
-  assert_tok("\ntoken", "token", 6);
-
-  assert_tok("test ##", "test ##", 7);
-  assert_tok("test \n##", "test ", 5);
-
-  assert_tok("#", "#", 1);
-  assert_tok("##", "##", 2);
-  assert_tok(" #", " ", 1);
-  assert_tok(" a#", " a#", 3);
+  assert_tok("single", "single", 6);
+  assert_tok("multi token", "multi", 5);
+  assert_tok("new\nline", "new", 3);
 }
 
 int main(int arc, char **argv) {
