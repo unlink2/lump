@@ -36,10 +36,23 @@ void test_tok(void **state) {
   assert_tok("  spaces", "spaces", 8);
 }
 
+void assert_slice(const char *tok, const char *expected, int expected_len,
+                  int from, int to) {
+  int dst_len = 256;
+  char dst[dst_len];
+  int len = lump_tok(dst, tok, dst_len);
+  assert_string_equal(expected, dst);
+  assert_int_equal(expected_len, len);
+}
+
+void test_slice(void **state) {
+  assert_slice("", "", 0, 0, 0);
+}
+
 int main(int arc, char **argv) {
-  const struct CMUnitTest tests[] = {cmocka_unit_test(test_trim),
-                                     cmocka_unit_test(test_strisspace),
-                                     cmocka_unit_test(test_tok)};
+  const struct CMUnitTest tests[] = {
+      cmocka_unit_test(test_trim), cmocka_unit_test(test_strisspace),
+      cmocka_unit_test(test_tok), cmocka_unit_test(test_slice)};
 
   return cmocka_run_group_tests(tests, NULL, NULL);
 }

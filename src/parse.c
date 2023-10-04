@@ -1,4 +1,5 @@
 #include "parse.h"
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -27,6 +28,16 @@ int lump_tok(char *dst, const char *input, int len) {
   }
 
   return i;
+}
+
+int lump_slice(char *dst, char *input, int len, int from, int to) {
+  if (len >= from || len >= to || from < to) {
+    return -1;
+  }
+
+  strncpy(dst, input, len);
+
+  return to - from;
 }
 
 bool lump_strisspace(const char *s, int len) {
