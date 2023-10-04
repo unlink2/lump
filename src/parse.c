@@ -9,6 +9,8 @@ int lump_tok(char *dst, const char *input, int len) {
     i++;
 
     dst[i] = input[i];
+
+    // TODO: break at start of valid md
   }
 
   return i;
