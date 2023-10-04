@@ -6,9 +6,8 @@
 
 /**
  * Writes the next token into dst
- * Note: it is possible for input to consist of only
- * a single token (e.g. a paragraph). This means that dst
- * should be at least as long as input to hold the entire token!
+ *
+ * returns the amount of bytes consumed
  */
 int lump_tok(char *dst, const char *input, int len);
 

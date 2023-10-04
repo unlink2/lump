@@ -26,7 +26,7 @@ int lump_tok(char *dst, const char *input, int len) {
     wrt++;
   }
 
-  return wrt;
+  return i;
 }
 
 bool lump_strisspace(const char *s, int len) {
