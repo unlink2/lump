@@ -13,6 +13,11 @@ int lump_tok(char *dst, const char *input, int len) {
     return -1;
   }
 
+  // trim
+  while (input[i] && isspace(input[i])) {
+    i++;
+  }
+
   // default case if the first char is not a markdown special token
   // or a html tag
   while (i < len && input[i] && !isspace(input[i])) {
@@ -21,7 +26,7 @@ int lump_tok(char *dst, const char *input, int len) {
     wrt++;
   }
 
-  return i;
+  return wrt;
 }
 
 bool lump_strisspace(const char *s, int len) {
