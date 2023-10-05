@@ -4,8 +4,23 @@
 #include <stdio.h>
 #include <string.h>
 
-int lump_tok(char *dst, const char *input, int len) {
+int lump_tokh(char *dst, const char *input, int len) {
   int i = 0;
+
+  // max out at h6
+  while (i <= 6 && input[i] == '#') {
+    dst[i] = input[i];
+    i++;
+  }
+
+  if (i > 6) {
+    return -1;
+  }
+  return i;
+}
+
+int lump_tok(char *dst, const char *input, int len) {
+  int i = -1;
   int wrt = 0;
   memset(dst, 0, len);
 
@@ -16,23 +31,35 @@ int lump_tok(char *dst, const char *input, int len) {
 
   // count non-space chars
   int non_space_chars = 0;
-  char first = '\0';
+
+  // special tokenizers
+  // they return -1 if they fail in which case we fall back
+  // to the default case
+  switch (input[0]) {
+  case '#':
+    i = lump_tokh(dst, input, len);
+    break;
+  default:
+    break;
+  }
+
+  if (i != -1) {
+    return i;
+  }
+  i = 0;
 
   // the only thing that will terminate a default case
   while (i < len - 1 && input[i]) {
     char c = input[i];
-    if (!first) {
-      first = c;
-    }
 
     dst[wrt] = c;
 
-    // tokens that need to be at the start of a
-    // line
+    // tokens that need to be at the start of a line
     if (non_space_chars == 0) {
       switch (c) {
       // h1-h6 needs to be a token
       case '#':
+      case '=':
         goto end;
       default:
         break;
