@@ -45,7 +45,7 @@ void test_tok(void **state) {
   assert_tok("######", "######", 6);
 
   assert_tok("###### test", "######", 6);
-  assert_tok("####### test", "####### test", 7);
+  assert_tok("####### test", "####### test", 12);
 
   assert_tok("test #", "test #", 6);
 }

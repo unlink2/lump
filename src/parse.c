@@ -38,6 +38,7 @@ int lump_tok(char *dst, const char *input, int len) {
   switch (input[0]) {
   case '#':
     i = lump_tokh(dst, input, len);
+    non_space_chars++;
     break;
   default:
     break;
