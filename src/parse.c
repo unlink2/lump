@@ -14,39 +14,24 @@ int lump_tok(char *dst, const char *input, int len) {
     return -1;
   }
 
-  // trim
-  while (input[i] && isspace(input[i])) {
-    // entierly empty line
-    if (input[i] == '\n') {
-      dst[wrt] = input[i++];
-      return i;
-    }
+  int non_space_chars = 0;
 
-    i++;
-  }
+  // the only thing that will terminate a default case
+  while (i < len && input[i]) {
+    char c = input[i];
+    dst[wrt] = c;
 
-  // default case if the first char is not a markdown special token
-  // or a html tag
-  while (i < len && input[i] && !isspace(input[i])) {
-    dst[wrt] = input[i];
     i++;
     wrt++;
+
+    non_space_chars += !isspace(c);
+
+    if (c == '\n' && !non_space_chars) {
+      break;
+    }
   }
 
   return i;
-}
-
-int lump_slice(char *dst, const char *input, int len, int from, int to) {
-  memset(dst, 0, len);
-  if (len <= from || len <= to || to < from) {
-    return -1;
-  }
-
-  int l = to - from;
-
-  strncpy(dst, input + from, l);
-
-  return l;
 }
 
 bool lump_strisspace(const char *s, int len) {
