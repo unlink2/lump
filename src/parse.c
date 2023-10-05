@@ -16,6 +16,12 @@ int lump_tok(char *dst, const char *input, int len) {
 
   // trim
   while (input[i] && isspace(input[i])) {
+    // entierly empty line
+    if (input[i] == '\n') {
+      dst[wrt] = input[i++];
+      return i;
+    }
+
     i++;
   }
 

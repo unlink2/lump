@@ -33,6 +33,7 @@ void test_tok(void **state) {
   assert_tok("single", "single", 6);
   assert_tok("multi token", "multi", 5);
   assert_tok("new\nline", "new", 3);
+  assert_tok(" \nline", "\n", 2);
   assert_tok("  spaces", "spaces", 8);
 }
 
