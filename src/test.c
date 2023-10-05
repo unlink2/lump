@@ -40,13 +40,21 @@ void assert_slice(const char *tok, const char *expected, int expected_len,
                   int from, int to) {
   int dst_len = 256;
   char dst[dst_len];
-  int len = lump_tok(dst, tok, dst_len);
+  int len = lump_slice(dst, tok, dst_len, from, to);
   assert_string_equal(expected, dst);
   assert_int_equal(expected_len, len);
 }
 
 void test_slice(void **state) {
   assert_slice("", "", 0, 0, 0);
+  assert_slice("", "", -1, 1, 0);
+  assert_slice("", "", -1, 257, 0);
+  assert_slice("", "", -1, 0, 257);
+
+  assert_slice("from start to end", "from start to end", 18, 0, 18);
+  assert_slice("from start", "from st", 7, 0, 7);
+  assert_slice("from middle", " middle", 7, 4, 11);
+  assert_slice("from middle", " midd", 5, 4, 9);
 }
 
 int main(int arc, char **argv) {

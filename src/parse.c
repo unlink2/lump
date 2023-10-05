@@ -30,14 +30,17 @@ int lump_tok(char *dst, const char *input, int len) {
   return i;
 }
 
-int lump_slice(char *dst, char *input, int len, int from, int to) {
-  if (len >= from || len >= to || from < to) {
+int lump_slice(char *dst, const char *input, int len, int from, int to) {
+  memset(dst, 0, len);
+  if (len <= from || len <= to || to < from) {
     return -1;
   }
 
-  strncpy(dst, input, len);
+  int l = to - from;
 
-  return to - from;
+  strncpy(dst, input + from, l);
+
+  return l;
 }
 
 bool lump_strisspace(const char *s, int len) {

@@ -10,6 +10,7 @@
  * returns the amount of bytes consumed
  */
 int lump_tok(char *dst, const char *input, int len);
+int lump_slice(char *dst, const char *input, int len, int from, int to);
 
 bool lump_strisspace(const char *s, int len);
 
