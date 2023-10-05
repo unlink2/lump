@@ -16,10 +16,15 @@ int lump_tok(char *dst, const char *input, int len) {
 
   // count non-space chars
   int non_space_chars = 0;
+  char first = '\0';
 
   // the only thing that will terminate a default case
   while (i < len - 1 && input[i]) {
     char c = input[i];
+    if (!first) {
+      first = c;
+    }
+
     dst[wrt] = c;
 
     // tokens that need to be at the start of a
