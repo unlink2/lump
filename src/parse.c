@@ -14,22 +14,38 @@ int lump_tok(char *dst, const char *input, int len) {
     return -1;
   }
 
+  // count non-space chars
   int non_space_chars = 0;
 
   // the only thing that will terminate a default case
-  while (i < len && input[i]) {
+  while (i < len - 1 && input[i]) {
     char c = input[i];
     dst[wrt] = c;
+
+    // tokens that need to be at the start of a
+    // line
+    if (non_space_chars == 0) {
+      switch (c) {
+      // h1-h6 needs to be a token
+      case '#':
+        goto end;
+      default:
+        break;
+      }
+    }
 
     i++;
     wrt++;
 
     non_space_chars += !isspace(c);
 
-    if (c == '\n' && !non_space_chars) {
+    // treat entierly empty line as a single token
+    if (non_space_chars == 0 && c == '\n') {
       break;
     }
   }
+end:
+  dst[wrt] = '\0';
 
   return i;
 }

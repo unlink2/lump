@@ -35,6 +35,19 @@ void test_tok(void **state) {
   assert_tok("new\nline", "new\nline", 8);
   assert_tok(" \nline", " \n", 2);
   assert_tok("  spaces", "  spaces", 8);
+
+  assert_tok("  #", "  ", 2);
+  assert_tok("#", "#", 1);
+  assert_tok("##", "###", 2);
+  assert_tok("###", "###", 3);
+  assert_tok("####", "####", 4);
+  assert_tok("#####", "#####", 5);
+  assert_tok("######", "######", 6);
+
+  assert_tok("###### test", "######", 6);
+  assert_tok("####### test", "####### test", 7);
+
+  assert_tok("test #", "test #", 6);
 }
 
 int main(int arc, char **argv) {
